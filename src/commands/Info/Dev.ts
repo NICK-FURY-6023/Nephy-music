@@ -40,7 +40,7 @@ export default class implements Command {
         new ButtonBuilder()
           .setLabel("Support Server")
           .setStyle(ButtonStyle.Link)
-          .setURL("https://discord.gg/xff4e2WvVy")
+          .setURL("https://discord.gg/CdCfgSC3qy")
       );
 
     await handler.editReply({ embeds: [xeondex], components: [row1] });
