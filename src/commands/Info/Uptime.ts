@@ -11,11 +11,11 @@ export default class implements Command {
   public accessableby = Accessableby.Member;
   public usage = "";
   public aliases = [];
-  public lavalink = false;
+  public lavalink = true;
   public options = [];
   public playerCheck = false;
   public usingInteraction = true;
-  public sameVoiceCheck = false;
+  public sameVoiceCheck = true;
   public permissions = [];
 
   public async execute(client: Manager, handler: CommandHandler) {
