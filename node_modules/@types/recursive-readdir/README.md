@@ -1,0 +1,35 @@
+# Installation
+> `npm install --save @types/recursive-readdir`
+
+# Summary
+This package contains type definitions for recursive-readdir (https://github.com/jergason/recursive-readdir/).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/recursive-readdir.
+## [index.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/recursive-readdir/index.d.ts)
+````ts
+/// <reference types="node" />
+
+import * as fs from "fs";
+declare namespace RecursiveReaddir {
+    type IgnoreFunction = (file: string, stats: fs.Stats) => boolean;
+    type Ignores = ReadonlyArray<string | IgnoreFunction>;
+    type Callback = (error: Error, files: string[]) => void;
+    interface readDir {
+        (path: string, ignores?: Ignores): Promise<string[]>;
+        (path: string, callback: Callback): void;
+        (path: string, ignores: Ignores, callback: Callback): void;
+    }
+}
+
+declare var recursiveReadDir: RecursiveReaddir.readDir;
+export = recursiveReadDir;
+
+````
+
+### Additional Details
+ * Last updated: Tue, 07 Nov 2023 20:08:00 GMT
+ * Dependencies: [@types/node](https://npmjs.com/package/@types/node)
+
+# Credits
+These definitions were written by [Micah Zoltu](https://github.com/MicahZoltu).

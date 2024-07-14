@@ -1,0 +1,27 @@
+{
+    "name": "@types/recursive-readdir",
+    "version": "2.2.4",
+    "description": "TypeScript definitions for recursive-readdir",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/recursive-readdir",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Micah Zoltu",
+            "githubUsername": "MicahZoltu",
+            "url": "https://github.com/MicahZoltu"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/recursive-readdir"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "e739b47c5ff67918cf89bb2335d4bb986850fdb943c825181bcb94ce430b8cef",
+    "typeScriptVersion": "4.5"
+}
