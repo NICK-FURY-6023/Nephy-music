@@ -1,1 +1,1 @@
-
+export type Language = string;
