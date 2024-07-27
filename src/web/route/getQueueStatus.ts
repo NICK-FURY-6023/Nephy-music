@@ -3,9 +3,13 @@ import { User } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
 
-export async function getQueueStatus(client: Manager, req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
+export async function getQueueStatus(
+  client: Manager,
+  req: Fastify.FastifyRequest,
+  res: Fastify.FastifyReply
+) {
   client.logger.info(
-    import.meta.url,
+    "StatusRouterService",
     `${req.method} ${req.routeOptions.url} params=${req.params ? util.inspect(req.params) : "{}"}`
   );
   const guildId = (req.params as Record<string, string>)["guildId"];
