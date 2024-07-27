@@ -1,3 +1,3 @@
 # Warining!
 
-ByteBlaze webserver will not use object oriented programing
+Nephy-music webserver will not use object oriented programing
