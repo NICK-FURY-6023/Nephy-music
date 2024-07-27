@@ -10,7 +10,7 @@ export class PostCreatePlayer {
 
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
     this.client.logger.info(
-      import.meta.url,
+      PostCreatePlayer.name,
       `${req.method} ${req.routeOptions.url} payload=${req.body ? util.inspect(req.body) : "{}"}`
     );
     const data = req.body as Record<string, string>;
@@ -22,7 +22,7 @@ export class PostCreatePlayer {
       textId: "",
       shardId: this.guild?.shardId ?? 0,
       deaf: true,
-      volume: this.client.config.lavalink.DEFAULT_VOLUME ?? 100,
+      volume: this.client.config.player.DEFAULT_VOLUME,
     };
     this.client.rainlink.create(playerData);
     res.send(playerData);
@@ -50,7 +50,8 @@ export class PostCreatePlayer {
     this.guild = Guild;
     const Member = await Guild.members.fetch(data["userId"]).catch(() => undefined);
     if (!Member) return this.errorRes(req, res, "User not found");
-    if (!Member.voice.channel || !Member.voice) return this.errorRes(req, res, "User is not in voice");
+    if (!Member.voice.channel || !Member.voice)
+      return this.errorRes(req, res, "User is not in voice");
     this.member = Member;
     return true;
   }
