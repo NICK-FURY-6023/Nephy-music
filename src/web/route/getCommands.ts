@@ -1,8 +1,12 @@
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
 
-export async function getCommands(client: Manager, req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
-  client.logger.info(import.meta.url, `${req.method} ${req.routeOptions.url} payload={}`);
+export async function getCommands(
+  client: Manager,
+  req: Fastify.FastifyRequest,
+  res: Fastify.FastifyReply
+) {
+  client.logger.info("CommandRouterService", `${req.method} ${req.routeOptions.url} payload={}`);
   res.send({
     data: client.commands.map((command) => ({
       name: command.name.join("-"),
