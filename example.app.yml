@@ -7,10 +7,13 @@
 # or by going to src/services/ConfigDataService.ts
 
 bot:
-  TOKEN: "Bot Token"
+  # You can add more than 1 token to clone the bot
+  # Note that performance will be dreaded and you can't set each config for each cloned bot
+  # Config data of each bot will be the same
+  TOKEN: "Bot Token 1"
   OWNER_ID: "Your User ID"
 
-lavalink:
+player:
   NODES:
     - host: "IP"
       port: 2333 # Your host port here
