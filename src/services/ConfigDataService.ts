@@ -13,13 +13,13 @@ export class ConfigDataService {
     this.checkConfig(raw);
     const res = this.mergeDefault(this.defaultConfig, raw);
 
-    if (old_data.features && old_data.features.DATABASE && old_data.features.DATABASE.config) {
-      res.features.DATABASE.config = old_data.features.DATABASE.config;
+    if (old_data.utilities && old_data.utilities.DATABASE && old_data.utilities.DATABASE.config) {
+      res.utilities.DATABASE.config = old_data.utilities.DATABASE.config;
     }
 
     if (process.env.DOCKER_COMPOSE_MODE) {
       // Change lavalink data
-      const lavalink_changedata = res.lavalink.NODES[0];
+      const lavalink_changedata = res.player.NODES[0];
       lavalink_changedata.host = String(process.env.NODE_HOST);
       lavalink_changedata.port = Number(process.env.NODE_PORT);
       lavalink_changedata.name = "node_1";
@@ -28,7 +28,7 @@ export class ConfigDataService {
 
       if (process.env.DOCKER_COMPOSE_DATABASE) {
         // Change db data
-        const db_chnagedata = res.features.DATABASE;
+        const db_chnagedata = res.utilities.DATABASE;
         if (db_chnagedata.driver == "mongodb") {
           db_chnagedata.config.uri = String(process.env.MONGO_URI);
         }
@@ -39,15 +39,27 @@ export class ConfigDataService {
   }
 
   checkConfig(res?: Config) {
-    if (!res) throw new Error("Config file not contains any config, please check app.example.yml for example");
+    if (!res)
+      throw new Error(
+        "Config file not contains any config, please check app.example.yml for example"
+      );
     if (!res.bot)
-      throw new Error("Config file not contains bot config field, please check app.example.yml for example");
-    if (!res.lavalink)
-      throw new Error("Config file not contains lavalink config field, please check app.example.yml for example");
+      throw new Error(
+        "Config file not contains bot config field, please check app.example.yml for example"
+      );
+    if (!res.player)
+      throw new Error(
+        "Config file not contains lavalink config field, please check app.example.yml for example"
+      );
     if (!res.bot.OWNER_ID)
-      throw new Error("Config file not contains OWNER_ID, please check app.example.yml for example");
-    if (!res.bot.TOKEN) throw new Error("Config file not contains TOKEN, please check app.example.yml for example");
-    if (!res.lavalink.NODES || res.lavalink.NODES.length == 0)
+      throw new Error(
+        "Config file not contains OWNER_ID, please check app.example.yml for example"
+      );
+    if (!res.bot.TOKEN || res.bot.TOKEN.length == 0)
+      throw new Error("Config file not contains TOKEN, please check app.example.yml for example");
+    if (typeof res.bot.TOKEN !== "string")
+      throw new Error("TOKEN field not in string, please check app.example.yml for example");
+    if (!res.player.NODES || res.player.NODES.length == 0)
       throw new Error("Config file not contains NODES, please check app.example.yml for example");
   }
 
@@ -62,9 +74,7 @@ export class ConfigDataService {
       delete given[key];
     }
     for (const key of defaultKeys) {
-      if (Array.isArray(given[key]) && given[key] !== null && given[key] !== undefined) {
-        if (given[key].length == 0) given[key] = def[key];
-      }
+      if (Array.isArray(given[key]) && given[key].length == 0) given[key] = def[key];
       if (def[key] === null || (typeof def[key] === "string" && def[key].length === 0)) {
         if (!given[key]) given[key] = def[key];
       }
@@ -72,6 +82,7 @@ export class ConfigDataService {
       if (typeof given[key] === "object" && given[key] !== null) {
         this.mergeDefault(def[key], given[key]);
       }
+      if (typeof given[key] !== typeof def[key]) if (!given[key]) given[key] = def[key];
     }
     return given as Required<T>;
   }
@@ -87,14 +98,10 @@ export class ConfigDataService {
         OWNER_ID: "",
         EMBED_COLOR: "#2B2D31",
         LANGUAGE: "en",
-        LIMIT_TRACK: 50,
-        LIMIT_PLAYLIST: 20,
-        SAFE_ICONS_MODE: true,
-        DELETE_MSG_TIMEOUT: 2000,
         DEBUG_MODE: false,
         ADMIN: [],
       },
-      lavalink: {
+      player: {
         SPOTIFY: {
           enable: false,
           id: "",
@@ -106,12 +113,17 @@ export class ConfigDataService {
         NODES: [],
         DEFAULT_VOLUME: 100,
         AVOID_SUSPEND: false,
+        LIMIT_TRACK: 50,
+        LIMIT_PLAYLIST: 20,
       },
-      features: {
+      utilities: {
+        AUTO_RESUME: false,
         TOPGG_TOKEN: "",
+        DELETE_MSG_TIMEOUT: 2000,
         DATABASE: {
           driver: "json",
           config: { path: "./cylane.database.json" },
+          cacheCleanSchedule: "0 */30 * * * *",
         },
         MESSAGE_CONTENT: {
           enable: true,
@@ -126,6 +138,7 @@ export class ConfigDataService {
           retryTimeout: 3000,
         },
         WEB_SERVER: {
+          host: "0.0.0.0",
           enable: false,
           port: 2880,
           auth: "youshallnotpass",
@@ -134,6 +147,25 @@ export class ConfigDataService {
         PREMIUM_LOG_CHANNEL: "",
         GUILD_LOG_CHANNEL: "",
         LOG_CHANNEL: "",
+      },
+      emojis: {
+        PLAYER: {
+          play: "▶️",
+          pause: "⏸️",
+          loop: "🔁",
+          shuffle: "🔀",
+          stop: "⏹️",
+          skip: "⏩",
+          previous: "⏪",
+          voldown: "🔉",
+          volup: "🔊",
+          queue: "📋",
+          delete: "🗑",
+        },
+        GLOBAL: {
+          arrow_next: "➡",
+          arrow_previous: "⬅",
+        },
       },
     };
   }
