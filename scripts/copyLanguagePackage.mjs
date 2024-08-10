@@ -1,13 +1,9 @@
-import fse from 'fs-extra'
-const { copySync } = fse
+import fs from 'node:fs'
 
-const srcDir = `./src/languages/`
-const destDir = `./dist/languages/`
-
-// To copy a folder or file, select overwrite accordingly
-try {
-  copySync(srcDir, destDir, { overwrite: true })
-  console.log('Copied language package from "src" directory successfully!')
-} catch (err) {
-  console.error(err)
-}
+fs.copyFile('./src/manifest.xml', './dist/manifest.xml', (err) => {
+  if (err) {
+    console.log('Error Found:', err)
+  } else {
+    console.log('Copied manifest from "src" directory successfully!')
+  }
+})
