@@ -46,7 +46,7 @@ function logger(data, type) {
   }
 }
 
-logger("ByteBlaze .zip build script", "info");
+logger("Nephy-music .zip build script", "info");
 logger("Version: 1.0.0", "info");
 
 if (!acceptedParams.includes(args.get(0))) {
